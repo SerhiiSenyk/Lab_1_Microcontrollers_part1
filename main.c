@@ -13,23 +13,23 @@
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include <util/delay.h>
-#define LED_ON(pin) PORTA |= (1 << pin);
-#define LED_OFF(pin) PORTA &= ~(1 << pin);
-
+#define LED_ON(pin) PORTA |= (1 << (pin))
+#define LED_OFF(pin) PORTA &= ~(1 << (pin))
+#define READ_PIN(pin) (1 << (pin)) & PINL
 int main(void)
 {
 	DDRA = 0xFF;
 	DDRL = 0;
 	while(1)
 	{
-		if((1 << PL3) & PINL){
+		if(READ_PIN(PL3)){
 			_delay_ms(30);
 			for(int8_t pin = 0;pin < 8; pin += 2){
-				LED_ON(pin)
+				LED_ON(pin);
 				_delay_ms(550);
-				LED_OFF(pin)
-				if(pin == 6)
-				pin = -1;
+				LED_OFF(pin);
+				if (pin == 6)
+					pin = -1;
 			}
 	    }	
     }
